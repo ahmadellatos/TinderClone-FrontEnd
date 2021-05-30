@@ -1,21 +1,42 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import 'react-native-gesture-handler'
+import React, { Component } from 'react'
+import { Text, View } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import Register from './Src/Register'
+import Home from './Src/Home'
+import Login from './Src/Login'
+import { Provider } from 'react-redux'
+import Store from './Src/Redux/Store'
+import MainMenu from './Src/MainMenu'
+import PilihCalon from './Src/PilihCalon'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+
+
+const Stack = createStackNavigator();
+export class App extends Component {
+  render() {
+    return (
+      <Provider store={Store}>
+        <NavigationContainer>
+          <Stack.Navigator
+            // initialRouteName="Home"
+            screenOptions={{
+              headerStyle: {
+                backgroundColor: '#fe3c72',
+              },
+              headerTintColor: '#fff'
+            }}>
+            <Stack.Screen name="Home" component={Home} options={{ title: 'Tinder Clone', headerTitleAlign: 'center' }} />
+            <Stack.Screen name="Register" component={Register} />
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="MainMenu" component={MainMenu} options={{ title: 'Main Menu', headerLeft: false, headerTitleAlign: 'center' }} />
+            <Stack.Screen name="PilihCalon" component={PilihCalon} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
+    )
+  }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App
